@@ -58,6 +58,7 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [historyOrder, setHistoryOrder] = useState("asc"); // asc or desc
   const currentSquares = history[currentMove];
   const xIsNext = currentMove % 2 == 0;
 
@@ -88,10 +89,21 @@ export default function Game() {
     return <li key={move}>{innerHtml}</li>;
   });
 
+  if (historyOrder == "desc") {
+    moves.reverse();
+  }
+
+  function historyOrderToggle() {
+    setHistoryOrder(historyOrder == "asc" ? "desc" : "asc");
+  }
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <button type="button" onClick={historyOrderToggle}>
+          toggle
+        </button>
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
