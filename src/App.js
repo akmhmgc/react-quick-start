@@ -55,7 +55,7 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
-export default function Game() {
+export function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [historyOrder, setHistoryOrder] = useState("asc"); // asc or desc
@@ -130,4 +130,32 @@ function calculateWinner(squares) {
     }
   }
   return null;
+}
+
+let firstRender = true;
+let count = 0;
+
+export default function RenderFunctionComponent() {
+  let initName;
+  let setInitName;
+
+  if (firstRender) {
+    const [first, second] = useState("Rudi");
+    initName = first;
+    setInitName = second;
+    count ++;
+    if (count > 0) firstRender = false;
+  }
+  const [firstName, setFirstName] = useState(initName);
+  const [lastName, setLastName] = useState("Yardley");
+
+  console.log(lastName);
+
+  return (
+    <>
+      <button onClick={() => setInitName("tarou")}>Fred</button>
+      <p>{firstName}</p>
+      <p>{lastName}</p>
+    </>
+  );
 }
