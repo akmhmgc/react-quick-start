@@ -80,7 +80,12 @@ function ProductTable({ products, filterText, inStockOnly }) {
   );
 }
 
-function SearchBar({ filterText, inStockOnly }) {
+function SearchBar({
+  filterText,
+  inStockOnly,
+  onInStockOnlyChange,
+  onFilterTextChange,
+}) {
   return (
     <form>
       <input
@@ -90,8 +95,12 @@ function SearchBar({ filterText, inStockOnly }) {
         onChange={(e) => onFilterTextChange(e.target.value)}
       />
       <label>
-        <input type="checkbox" checked={inStockOnly} /> Only show products in
-        stock
+        <input
+          type="checkbox"
+          checked={inStockOnly}
+          onChange={(e) => onInStockOnlyChange(e.target.checked)}
+        />{" "}
+        Only show products in stock
       </label>
     </form>
   );
