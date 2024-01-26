@@ -1,46 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-function Example() {
-  const [count, setCount] = useState(0);
-
+function Example({ count, clickHandler }) {
   useEffect(() => {
-    document.title = `You clicked ${count} times`;
-  });
+    console.log(`変更されました ${count}`);
+  }, [count]);
+  const now = new Date();
+  // 第二引数が変化した時点で新しい関数が生成される
+  const click = useCallback(()=> console.log(now.getSeconds()), [count])
 
   return (
     <div>
       <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
+      <button onClick={clickHandler}>Click me</button>
+      <button onClick={click}>わめき</button>
     </div>
   );
 }
-// class Example extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       count: 0,
-//     };
-//   }
 
-//   componentDidMount() {
-//     document.title = `You clicked ${this.state.count} times`;
-//   }
-//   componentDidUpdate() {
-//     document.title = `You clicked ${this.state.count} times`;
-//   }
+function Main() {
+  const [count, setCount] = useState(0);
+  function clickHandler() {
+    setCount(count + 1);
+  }
+  return (
+    <>
+      <Example count={count} clickHandler={clickHandler} />
+    </>
+  );
+}
 
-//   render() {
-//     return (
-//       <div>
-//         <p>You clicked {this.state.count} times</p>
-//         <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-//           Click me
-//         </button>
-//       </div>
-//     );
-//   }
-// }
-
-export default Example;
+export default Main;
