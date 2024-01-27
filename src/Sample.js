@@ -6,7 +6,7 @@ function Example({ count, clickHandler }) {
   }, [count]);
   const now = new Date();
   // 第二引数が変化した時点で新しい関数が生成される
-  const click = useCallback(()=> console.log(now.getSeconds()), [count])
+  const click = useCallback(() => console.log(now.getSeconds()), [count]);
 
   return (
     <div>
@@ -17,6 +17,11 @@ function Example({ count, clickHandler }) {
   );
 }
 
+// 配列を返り値として使用することもできる
+function Columns() {
+  return [<p>Hello</p>, <p>World</p>];
+}
+
 function Main() {
   const [count, setCount] = useState(0);
   function clickHandler() {
@@ -25,6 +30,7 @@ function Main() {
   return (
     <>
       <Example count={count} clickHandler={clickHandler} />
+      <Columns />
     </>
   );
 }
