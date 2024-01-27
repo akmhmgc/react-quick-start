@@ -17,11 +17,25 @@ function Example({ count, clickHandler }) {
   );
 }
 
-// 配列を返り値として使用することもできる
-function Columns() {
-  return [<p>Hello</p>, <p>World</p>];
+function initialValue() {
+  console.log("計算は走るよ");
+  return 1;
 }
 
+function Counter1() {
+  // こういう感じに呼び出すことでコストが下がる
+  const [value, setValue] = useState(() => initialValue());
+  const increment = useCallback(() => {
+    setValue(value + 1);
+  }, [value]);
+
+  return (
+    <div>
+      Counter: {value}
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
 function Main() {
   const [count, setCount] = useState(0);
   function clickHandler() {
@@ -29,8 +43,7 @@ function Main() {
   }
   return (
     <>
-      <Example count={count} clickHandler={clickHandler} />
-      <Columns />
+      <Counter1 />
     </>
   );
 }
