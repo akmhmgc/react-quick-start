@@ -1,26 +1,31 @@
 import { useReducer } from "react";
 
-const initialState = 0;
-const reducer = (state, action) => {
-  switch (action) {
-    case 'increment': return state + 1;
-    case 'decrement': return state - 1;
-    case 'reset': return 0;
-    default: throw new Error('Unexpected action');
+function reducer(state, action) {
+  console.log(state)
+  switch (action.type) {
+    case 'increment':
+      return { ...state, count: state.count + 1 };
+    case 'decrement':
+      return { ...state, count: state.count - 1 };
+    case 'setText':
+      return { ...state, text: action.text };
+    default:
+      return state;
   }
-};
+}
 
-function Counter() {
-  // 現在のステートとアクションをトリガするdispatch関数を返します。
-  const [count, dispatch] = useReducer(reducer, initialState);
+function MyComponent() {
+  const [state, dispatch] = useReducer(reducer, { count: 0, text: '' });
+
   return (
-    <div>
-      {count}
-      <button onClick={() => dispatch('increment')}>+1</button>
-      <button onClick={() => dispatch('decrement')}>-1</button>
-      <button onClick={() => dispatch('reset')}>reset</button>
-    </div>
+    <>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
+      <p>Text: {state.text}</p>
+      <button onClick={() => dispatch({ type: 'setText', text: 'Hello' })}>Set Text</button>
+    </>
   );
 }
 
-export default Counter;
+export default MyComponent;
