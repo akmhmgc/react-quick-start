@@ -1,7 +1,7 @@
 const customObject = {
   toString() {
-      return "custom value";
-  }
+    return "custom value";
+  },
 };
 
 console.log(String(customObject));
