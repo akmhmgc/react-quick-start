@@ -20,3 +20,16 @@ function joinNumbers(...nums: number[]): string {
 }
 
 joinNumbers(1,2,3)
+
+// making omission explict
+function stringify123(
+  callback: undefined | ((num: number) => string)) {
+  const num = 123;
+  if (callback === undefined) { // (A)
+    callback = String;
+  }
+  return callback(num); // (B)
+}
+
+// 上の書き方だと明示する必要がある
+stringify123(undefined)
