@@ -74,12 +74,15 @@ type TypeFactory2<T> = Array<T>;
 type MyType2 = TypeFactory2<number>;
 const val: MyType2 = [1, 2, 3];
 
-class Sample<T> {
-  #arr: T[] = [];
+const identity = <Arg>(arg: Arg): Arg => arg;
 
-  add(elm: T): void {
-    this.#arr.push(elm);
-  }
+console.log(identity<string>("hello"));
+console.log(identity("hello"));
+
+// complicated type
+function fillArray<T>(len: number, elem: T): T[] {
+  return new Array<T>(len).fill(elem);
 }
 
-const sample = new Sample<number>();
+const arr = fillArray<number>(3, 5);
+console.log(arr)
