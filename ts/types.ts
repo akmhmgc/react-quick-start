@@ -86,3 +86,6 @@ function fillArray<T>(len: number, elem: T): T[] {
 
 const arr = fillArray<number>(3, 5);
 console.log(arr)
+
+type arr = Array<string[]>
+const array2:arr = [["a"]]
