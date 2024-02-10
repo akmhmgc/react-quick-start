@@ -16,20 +16,70 @@ const hey = (word?: string): string => {
 
 // rest parameters
 function joinNumbers(...nums: number[]): string {
-  return nums.join('-');
+  return nums.join("-");
 }
 
-joinNumbers(1,2,3)
+joinNumbers(1, 2, 3);
 
 // making omission explict
-function stringify123(
-  callback: undefined | ((num: number) => string)) {
+function stringify123(callback: undefined | ((num: number) => string)) {
   const num = 123;
-  if (callback === undefined) { // (A)
+  if (callback === undefined) {
+    // (A)
     callback = String;
   }
   return callback(num); // (B)
 }
 
 // 上の書き方だと明示する必要がある
-stringify123(undefined)
+stringify123(undefined);
+
+// interface
+// interface Point {
+//   x: number;
+//   y: number;
+//   distance(num: number): number;
+// }
+
+interface Point {
+  x: number;
+  y: number;
+  distance: (num: number) => number;
+}
+
+const test = (point: Point) => {
+  return point.x;
+};
+
+const p: Point = {
+  x: 2,
+  y: 3,
+  distance: function (): number {
+    return 1;
+  },
+};
+
+interface HasMethodDef {
+  simpleMethod(flag: boolean): void;
+}
+interface HasFuncProp {
+  simpleMethod: (flag: boolean) => void;
+}
+
+// type factory
+type TypeFactory<X> = X; // definition
+type MyType = TypeFactory<string>; // use
+
+type TypeFactory2<T> = Array<T>;
+type MyType2 = TypeFactory2<number>;
+const val: MyType2 = [1, 2, 3];
+
+class Sample<T> {
+  #arr: T[] = [];
+
+  add(elm: T): void {
+    this.#arr.push(elm);
+  }
+}
+
+const sample = new Sample<number>();
